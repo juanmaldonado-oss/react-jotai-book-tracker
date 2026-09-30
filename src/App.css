@@ -1,0 +1,297 @@
+.app-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 48px 24px;
+}
+
+.app-header {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.app-header h1 {
+  font-size: 42px;
+  margin-bottom: 8px;
+  letter-spacing: -1px;
+}
+
+.app-header p {
+  color: var(--text);
+  font-size: 17px;
+}
+
+/* -------------------------
+   Cards
+-------------------------- */
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+}
+
+.card h2 {
+  margin-bottom: 20px;
+}
+
+/* -------------------------
+   Form
+-------------------------- */
+
+.book-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  text-align: left;
+}
+
+.form-field label {
+  color: var(--text-h);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.form-field input {
+  width: 100%;
+  padding: 11px 13px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+
+  background: var(--surface);
+  color: var(--text-h);
+
+  outline: none;
+
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.form-field input::placeholder {
+  color: #aaa3b3;
+}
+
+.form-field input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-bg);
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* -------------------------
+   Buttons
+-------------------------- */
+
+.button {
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+
+  font-weight: 600;
+
+  transition:
+    background 0.2s,
+    transform 0.1s;
+}
+
+.button:active {
+  transform: scale(0.98);
+}
+
+.button-primary {
+  background: var(--accent);
+  color: white;
+}
+
+.button-primary:hover {
+  background: var(--accent-hover);
+}
+
+.button-secondary {
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+.button-secondary:hover {
+  background: rgba(139, 44, 245, 0.15);
+}
+
+.button-danger {
+  background: var(--danger-bg);
+  color: var(--danger);
+}
+
+.button-danger:hover {
+  background: #fee2e2;
+}
+
+/* -------------------------
+   Statistics
+-------------------------- */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin: 24px 0;
+}
+
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+
+  padding: 18px;
+  text-align: center;
+}
+
+.stat-card .stat-value {
+  display: block;
+
+  color: var(--text-h);
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.stat-card .stat-label {
+  color: var(--text);
+  font-size: 13px;
+}
+
+/* -------------------------
+   Book List
+-------------------------- */
+
+.books-section {
+  margin-top: 28px;
+}
+
+.books-section h2 {
+  margin-bottom: 16px;
+}
+
+.book-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.book-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+
+  padding: 18px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.book-info {
+  text-align: left;
+}
+
+.book-title {
+  color: var(--text-h);
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+
+.book-author {
+  color: var(--text);
+  font-size: 14px;
+}
+
+.book-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 5px 10px;
+  border-radius: 999px;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-read {
+  color: var(--success);
+  background: var(--success-bg);
+}
+
+.status-unread {
+  color: var(--text);
+  background: #f2f1f4;
+}
+
+.empty-message {
+  background: var(--surface);
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+
+  padding: 30px;
+
+  text-align: center;
+}
+
+.filters-card {
+  margin-bottom: 28px;
+}
+
+.filter-buttons {
+  display: flex;
+  gap: 8px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+
+/* -------------------------
+   Responsive
+-------------------------- */
+
+@media (max-width: 700px) {
+  .app-container {
+    padding: 28px 16px;
+  }
+
+  .app-header h1 {
+    font-size: 32px;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .book-item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .book-actions {
+    flex-wrap: wrap;
+  }
+}
