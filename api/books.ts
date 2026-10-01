@@ -1,4 +1,4 @@
-import { booksContainer } from '../server/cosmos';
+import { booksContainer } from '../server/cosmos.js';
 import type {
   CosmosBook,
   CreateBookRequest,
