@@ -30,7 +30,6 @@ const handleSubmit = (
   }
 
   setError('');
-
   setTitle('');
   setAuthor('');
 };
