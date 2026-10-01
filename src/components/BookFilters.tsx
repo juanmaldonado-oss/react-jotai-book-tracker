@@ -2,7 +2,7 @@ import { useAtom } from 'jotai';
 import {
   searchAtom,
   bookFilterAtom,
-} from '../atoms/bookAtoms';
+} from '../atoms/bookState';
 
 function BookFilters() {
   const [search, setSearch] = useAtom(searchAtom);

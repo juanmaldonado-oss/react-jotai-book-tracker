@@ -1,6 +1,6 @@
 import { useState, type SubmitEvent } from 'react';
 import { useSetAtom } from 'jotai';
-import { addBookAtom} from '../atoms/bookAtoms';
+import { addBookAtom} from '../atoms/bookActions';
 
 function BookForm() {
   const [title, setTitle] = useState('');

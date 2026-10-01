@@ -5,7 +5,9 @@ import {
 } from 'react';
 import ErrorBoundary from './ErrorBoundary';
 import { useSetAtom } from 'jotai';
-import { apiSearchQueryAtom } from '../atoms/bookAtoms';
+import {
+  apiSearchQueryAtom,
+} from '../atoms/bookState';
 
 import BookSearchResults from './BookSearchResults';
 

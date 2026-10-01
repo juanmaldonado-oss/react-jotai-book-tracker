@@ -3,15 +3,15 @@ import {
   useSetAtom,
 } from 'jotai';
 
+import { filteredBooksAtom } from '../atoms/bookSelectors';
+
 import {
   deleteBookAtom,
-  filteredBooksAtom,
   toggleBookReadAtom,
-} from '../atoms/bookAtoms';
+} from '../atoms/bookActions';
 
 function BookList() {
   const books = useAtomValue(filteredBooksAtom);
-
   const deleteBook = useSetAtom(deleteBookAtom);
   const toggleRead = useSetAtom(toggleBookReadAtom);
 

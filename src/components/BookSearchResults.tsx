@@ -5,9 +5,15 @@ import {
 
 import {
   apiBooksAtom,
+} from '../atoms/bookApi';
+
+import {
   apiSearchQueryAtom,
+} from '../atoms/bookState';
+
+import {
   addBookAtom,
-} from '../atoms/bookAtoms';
+} from '../atoms/bookActions';
 
 function BookSearchResults() {
   const query =

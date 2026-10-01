@@ -4,7 +4,7 @@ import {
   readBooksAtom,
   unreadBooksAtom,
   readPercentageAtom
-} from '../atoms/bookAtoms';
+} from '../atoms/bookSelectors';
 
 function BookStats() {
   const totalBooks = useAtomValue(totalBooksAtom);
