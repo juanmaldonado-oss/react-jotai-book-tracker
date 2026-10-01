@@ -1,12 +1,7 @@
 import { atom } from 'jotai';
-import { atomWithStorage } from 'jotai/utils';
+import type { Book, BookFilter } from '../types/book';
 
-import type {
-  Book,
-  BookFilter,
-} from '../types/book';
-
-export const booksAtom = atomWithStorage<Book[]>('books', []);
+export const booksAtom = atom<Book[]>([]);
 
 export const searchAtom = atom('');
 

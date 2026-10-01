@@ -9,7 +9,7 @@ function BookForm() {
 
   const addBook = useSetAtom(addBookAtom);
 
-const handleSubmit = (
+const handleSubmit = async (
   event: SubmitEvent<HTMLFormElement>
 ) => {
   event.preventDefault();
@@ -19,15 +19,15 @@ const handleSubmit = (
     return;
   }
 
-  const wasAdded = addBook({
-    title: title.trim(),
-    author: author.trim(),
-  });
+  const result = await addBook({
+  title: title.trim(),
+  author: author.trim(),
+});
 
-  if (!wasAdded) {
-    setError('This book is already in your collection.');
-    return;
-  }
+if (!result.success) {
+  setError(result.message);
+  return;
+}
 
   setError('');
   setTitle('');

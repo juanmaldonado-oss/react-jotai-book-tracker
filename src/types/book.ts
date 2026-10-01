@@ -30,3 +30,35 @@ export interface OpenLibraryBook {
 export interface OpenLibraryResponse {
   docs: OpenLibraryBook[];
 }
+
+export interface CosmosBook {
+  id: string;
+  userId: string;
+  title: string;
+  author: string;
+  isRead: boolean;
+  createdAt: string;
+}
+
+export interface CreateBookRequest {
+  title: string;
+  author: string;
+}
+
+export type AddBookResult =
+  | {
+      success: true;
+    }
+  | {
+      success: false;
+      message: string;
+    };
+
+export interface UpdateBookRequest {
+  id: string;
+  isRead: boolean;
+}
+
+export interface DeleteBookRequest {
+  id: string;
+}

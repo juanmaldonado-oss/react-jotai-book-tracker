@@ -1,18 +1,10 @@
 import { booksContainer } from '../server/cosmos';
-
-interface CosmosBook {
-  id: string;
-  userId: string;
-  title: string;
-  author: string;
-  isRead: boolean;
-  createdAt: string;
-}
-
-interface CreateBookRequest {
-  title: string;
-  author: string;
-}
+import type {
+  CosmosBook,
+  CreateBookRequest,
+  UpdateBookRequest,
+  DeleteBookRequest,
+} from '../src/types/book';
 
 const USER_ID = 'demo-user';
 
@@ -114,6 +106,97 @@ export async function POST(
     return Response.json(
       {
         error: 'Failed to create book.',
+      },
+      {
+        status: 500,
+      }
+    );
+  }
+}
+
+export async function PATCH(
+  request: Request
+) {
+  try {
+    const body =
+      (await request.json()) as UpdateBookRequest;
+
+    if (!body.id) {
+      return Response.json(
+        {
+          error: 'Book id is required.',
+        },
+        {
+          status: 400,
+        }
+      );
+    }
+
+    const { resource } =
+      await booksContainer
+        .item(body.id, USER_ID)
+        .patch<CosmosBook>([
+          {
+            op: 'replace',
+            path: '/isRead',
+            value: body.isRead,
+          },
+        ]);
+
+    return Response.json({
+      book: resource,
+    });
+  } catch (error) {
+    console.error(
+      'Failed to update book:',
+      error
+    );
+
+    return Response.json(
+      {
+        error: 'Failed to update book.',
+      },
+      {
+        status: 500,
+      }
+    );
+  }
+}
+
+export async function DELETE(
+  request: Request
+) {
+  try {
+    const body =
+      (await request.json()) as DeleteBookRequest;
+
+    if (!body.id) {
+      return Response.json(
+        {
+          error: 'Book id is required.',
+        },
+        {
+          status: 400,
+        }
+      );
+    }
+
+    await booksContainer
+      .item(body.id, USER_ID)
+      .delete();
+
+    return Response.json({
+      success: true,
+    });
+  } catch (error) {
+    console.error(
+      'Failed to delete book:',
+      error
+    );
+
+    return Response.json(
+      {
+        error: 'Failed to delete book.',
       },
       {
         status: 500,
