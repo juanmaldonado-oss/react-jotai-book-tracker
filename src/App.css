@@ -269,7 +269,13 @@
   flex-wrap: wrap;
 }
 
-/* -------------------------
+
+.form-error {
+  color: var(--danger);
+  font-size: 14px;
+  margin: 0;
+  text-align: left;
+}/* -------------------------
    Responsive
 -------------------------- */
 

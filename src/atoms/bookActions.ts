@@ -7,18 +7,31 @@ import type {
 
 export const addBookAtom = atom(
   null,
-  (_get, set, newBook: NewBook) => {
+  (get, set, newBook: NewBook) => {
+    const books = get(booksAtom);
+
+    const alreadyExists = books.some(
+      (book) =>
+        book.title.trim().toLowerCase() ===
+          newBook.title.trim().toLowerCase() &&
+        book.author.trim().toLowerCase() ===
+          newBook.author.trim().toLowerCase()
+    );
+
+    if (alreadyExists) {
+      return false;
+    }
+
     const book: Book = {
       id: crypto.randomUUID(),
-      title: newBook.title,
-      author: newBook.author,
+      title: newBook.title.trim(),
+      author: newBook.author.trim(),
       isRead: false,
     };
 
-    set(booksAtom, (books) => [
-      ...books,
-      book,
-    ]);
+    set(booksAtom, [...books, book]);
+
+    return true;
   }
 );
 

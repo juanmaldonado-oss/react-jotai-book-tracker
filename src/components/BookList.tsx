@@ -1,19 +1,14 @@
-import {
-  useAtomValue,
-  useSetAtom,
-} from 'jotai';
-
-import { filteredBooksAtom } from '../atoms/bookSelectors';
+import { useAtomValue } from 'jotai';
 
 import {
-  deleteBookAtom,
-  toggleBookReadAtom,
-} from '../atoms/bookActions';
+  filteredBooksAtom,
+} from '../atoms/bookSelectors';
+
+import BookItem from './BookItem';
 
 function BookList() {
-  const books = useAtomValue(filteredBooksAtom);
-  const deleteBook = useSetAtom(deleteBookAtom);
-  const toggleRead = useSetAtom(toggleBookReadAtom);
+  const books =
+    useAtomValue(filteredBooksAtom);
 
   return (
     <section className="books-section">
@@ -21,53 +16,17 @@ function BookList() {
 
       {books.length === 0 ? (
         <div className="empty-message">
-          <p>No books yet. Add your first one above.</p>
+          <p>
+            No books found.
+          </p>
         </div>
       ) : (
         <ul className="book-list">
           {books.map((book) => (
-            <li
-              className="book-item"
+            <BookItem
               key={book.id}
-            >
-              <div className="book-info">
-                <div className="book-title">
-                  {book.title}
-                </div>
-
-                <div className="book-author">
-                  {book.author}
-                </div>
-              </div>
-
-              <div className="book-actions">
-                <span
-                  className={
-                    book.isRead
-                      ? 'status status-read'
-                      : 'status status-unread'
-                  }
-                >
-                  {book.isRead ? '✓ Read' : 'Not Read'}
-                </span>
-
-                <button
-                  className="button button-secondary"
-                  onClick={() => toggleRead(book.id)}
-                >
-                  {book.isRead
-                    ? 'Mark Unread'
-                    : 'Mark Read'}
-                </button>
-
-                <button
-                  className="button button-danger"
-                  onClick={() => deleteBook(book.id)}
-                >
-                  Delete
-                </button>
-              </div>
-            </li>
+              book={book}
+            />
           ))}
         </ul>
       )}

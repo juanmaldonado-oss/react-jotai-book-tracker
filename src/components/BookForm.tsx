@@ -1,28 +1,39 @@
 import { useState, type SubmitEvent } from 'react';
 import { useSetAtom } from 'jotai';
-import { addBookAtom} from '../atoms/bookActions';
+import { addBookAtom } from '../atoms/bookActions';
 
 function BookForm() {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
+  const [error, setError] = useState('');
 
   const addBook = useSetAtom(addBookAtom);
 
 const handleSubmit = (
   event: SubmitEvent<HTMLFormElement>
 ) => {
-    event.preventDefault(); 
+  event.preventDefault();
 
-    if (!title.trim() || !author.trim()) {
-      return;
-    }
+  if (!title.trim() || !author.trim()) {
+    setError('Title and author are required.');
+    return;
+  }
 
-    
-    addBook({ title: title.trim(), author: author.trim() });
+  const wasAdded = addBook({
+    title: title.trim(),
+    author: author.trim(),
+  });
 
-    setTitle('');
-    setAuthor('');
-  };
+  if (!wasAdded) {
+    setError('This book is already in your collection.');
+    return;
+  }
+
+  setError('');
+
+  setTitle('');
+  setAuthor('');
+};
 
   return (
     <section className="card">
@@ -39,7 +50,13 @@ const handleSubmit = (
             type="text"
             placeholder="Enter book title"
             value={title}
-            onChange={(event) => setTitle(event.target.value)}
+            onChange={(event) => {
+              setTitle(event.target.value);
+
+              if (error) {
+                setError('');
+              }
+            }}
           />
         </div>
 
@@ -53,9 +70,21 @@ const handleSubmit = (
             type="text"
             placeholder="Enter author name"
             value={author}
-            onChange={(event) => setAuthor(event.target.value)}
+            onChange={(event) => {
+              setAuthor(event.target.value);
+
+              if (error) {
+                setError('');
+              }
+            }}
           />
         </div>
+
+        {error && (
+          <p className="form-error">
+            {error}
+          </p>
+        )}
 
         <div className="form-actions">
           <button
