@@ -39,20 +39,34 @@ function BookSearch() {
       <h2>Find a Book</h2>
 
       <div className="form-field">
-        <label htmlFor="api-search">
-          Search Open Library
-        </label>
+  <label htmlFor="api-search">
+    Search Open Library
+  </label>
 
-        <input
-          id="api-search"
-          type="text"
-          placeholder="Enter at least 3 characters..."
-          value={input}
-          onChange={(event) =>
-            setInput(event.target.value)
-          }
-        />
-      </div>
+  <div className="search-row">
+    <input
+      id="api-search"
+      type="text"
+      placeholder="Enter at least 3 characters..."
+      value={input}
+      onChange={(event) =>
+        setInput(event.target.value)
+      }
+    />
+
+    <button
+      type="button"
+      className="button button-secondary agent-button"
+      onClick={() => {
+        console.log(
+          'AI Agent coming soon'
+        );
+      }}
+    >
+      %
+    </button>
+  </div>
+</div>
 
       <ErrorBoundary
             key={input}

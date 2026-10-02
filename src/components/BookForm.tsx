@@ -2,12 +2,106 @@ import { useState, type SubmitEvent } from 'react';
 import { useSetAtom } from 'jotai';
 import { addBookAtom } from '../atoms/bookActions';
 
-function BookForm() {
+interface BookFormProps {
+  onBookAdded: () => void;
+}
+
+function BookForm({
+  onBookAdded,
+}: BookFormProps) {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [error, setError] = useState('');
-
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [isAnalyzing, setIsAnalyzing,] = useState(false);
+  const [pdfMessage, setPdfMessage,] = useState('');
   const addBook = useSetAtom(addBookAtom);
+
+const analyzePdf = async () => {
+  if (!selectedFile) {
+    setError('Please select a PDF first.');
+    return;
+  }
+
+  const maxFileSize =
+    4 * 1024 * 1024;
+
+  if (selectedFile.size > maxFileSize) {
+    setError(
+      'PDF must be smaller than 4 MB.'
+    );
+    return;
+  }
+
+  setError('');
+  setPdfMessage('');
+  setIsAnalyzing(true);
+
+  try {
+    const formData =
+      new FormData();
+
+    formData.append(
+      'file',
+      selectedFile
+    );
+
+    const response =
+      await fetch(
+        '/api/analyze-book',
+        {
+          method: 'POST',
+          body: formData,
+        }
+      );
+
+    const data =
+      (await response.json()) as {
+        success?: boolean;
+
+        book?: {
+          title: string;
+          author: string;
+        };
+
+        error?: string;
+      };
+
+    if (!response.ok) {
+      setError(
+        data.error ??
+          'Unable to analyze PDF.'
+      );
+
+      return;
+    }
+
+    if (!data.book) {
+      setError(
+        'Book information was not returned.'
+      );
+      return;
+    }
+
+    setTitle(data.book.title);
+    setAuthor(data.book.author);
+
+    setPdfMessage(
+      'Book information detected successfully.'
+    );
+  } catch (error) {
+    console.error(
+      'PDF analysis failed:',
+      error
+    );
+
+    setError(
+      'Unable to analyze PDF.'
+    );
+  } finally {
+    setIsAnalyzing(false);
+  }
+};
 
 const handleSubmit = async (
   event: SubmitEvent<HTMLFormElement>
@@ -32,6 +126,8 @@ if (!result.success) {
   setError('');
   setTitle('');
   setAuthor('');
+  onBookAdded();
+  setSelectedFile(null);
 };
 
   return (
@@ -78,6 +174,69 @@ if (!result.success) {
             }}
           />
         </div>
+
+        <div className="form-field">
+  <label htmlFor="book-pdf">
+    Book PDF
+  </label>
+
+  <input
+    id="book-pdf"
+    type="file"
+    accept="application/pdf"
+    onChange={(event) => {
+      const file =
+        event.target.files?.[0] ?? null;
+
+      if (
+        file &&
+        file.type !== 'application/pdf'
+      ) {
+        setError(
+          'Please select a PDF file.'
+        );
+
+        setSelectedFile(null);
+
+        return;
+      }
+
+      setError('');
+      setSelectedFile(file);
+    }}
+  />
+
+  {selectedFile && (
+  <p className="selected-file">
+    Selected: {selectedFile.name}
+  </p>
+)}
+
+<button
+  type="button"
+  className="button button-secondary"
+  onClick={analyzePdf}
+  disabled={
+    !selectedFile ||
+    isAnalyzing
+  }
+>
+  {isAnalyzing
+    ? 'Analyzing...'
+    : 'Analyze PDF'}
+</button>
+
+{pdfMessage && (
+  <p className="api-message">
+    {pdfMessage}
+  </p>
+)}
+
+  {!pdfMessage && (<small className="form-help">
+    Optional. Upload a PDF to detect the
+    book title and author.
+  </small>)}
+</div>
 
         {error && (
           <p className="form-error">

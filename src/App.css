@@ -275,7 +275,108 @@
   font-size: 14px;
   margin: 0;
   text-align: left;
-}/* -------------------------
+}
+
+.book-toolbar {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.book-toolbar .api-search {
+  flex: 1;
+}
+
+.add-book-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 24px;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background: rgba(0, 0, 0, 0.45);
+
+  z-index: 1000;
+}
+
+.modal {
+  width: 100%;
+  max-width: 520px;
+
+  background: white;
+
+  border-radius: 12px;
+
+  padding: 24px;
+
+  box-shadow:
+    0 20px 50px
+    rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 20px;
+}
+
+.modal-header h2 {
+  margin: 0;
+}
+
+.modal-close {
+  border: none;
+  background: transparent;
+
+  font-size: 28px;
+
+  cursor: pointer;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+
+  margin-top: 16px;
+}
+
+.search-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-row input {
+  flex: 1;
+}
+
+.agent-button {
+  flex-shrink: 0;
+}
+
+.form-help {
+  font-size: 13px;
+  opacity: 0.7;
+}
+
+.selected-file {
+  margin: 4px 0 0;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* -------------------------
    Responsive
 -------------------------- */
 

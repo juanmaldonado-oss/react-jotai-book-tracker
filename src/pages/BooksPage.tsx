@@ -25,6 +25,9 @@ function BooksPage() {
   const [loadError, setLoadError] =
     useState('');
 
+  const [isAddBookOpen, setIsAddBookOpen] =
+  useState(false);
+
   useEffect(() => {
     loadBooks()
       .catch((error) => {
@@ -42,7 +45,7 @@ function BooksPage() {
       });
   }, [loadBooks]);
 
-  return (
+    return (
     <main className="app-container">
       <header className="app-header">
         <h1>📚 Book Tracker</h1>
@@ -52,16 +55,67 @@ function BooksPage() {
         </p>
       </header>
 
-      <BookForm />
+       <BookSearch />
 
-      <BookSearch />
+      <div className="add-book-row">
+        <button
+          type="button"
+          className="button button-primary"
+          onClick={() =>
+            setIsAddBookOpen(true)
+          }
+        >
+          Add Book
+        </button>
+      </div>
+
+      {isAddBookOpen && (
+        <div className="modal-backdrop">
+          <div className="modal">
+            <div className="modal-header">
+              <h2>Add Book</h2>
+
+              <button
+                type="button"
+                className="modal-close"
+                onClick={() =>
+                  setIsAddBookOpen(false)
+                }
+              >
+                ×
+              </button>
+            </div>
+
+            <BookForm
+              onBookAdded={() =>
+                setIsAddBookOpen(false)
+              }
+/>
+
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="button button-secondary"
+                onClick={() =>
+                  setIsAddBookOpen(false)
+                }
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <BookStats />
 
       <BookFilters />
 
-      <BookList />
+      {!isLoading && (
+            <BookList />
+      )}
 
-        {isLoading && (
+       {isLoading && (
         <p className="api-message">
           Loading books...
         </p>
